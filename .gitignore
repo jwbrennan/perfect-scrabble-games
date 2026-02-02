@@ -32,6 +32,3 @@ dist-ssr
 .env.test.local
 .env.production
 .env.production.local
-
-
-src/firebaseConfig.ts
