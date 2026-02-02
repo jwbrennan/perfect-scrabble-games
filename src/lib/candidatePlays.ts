@@ -165,9 +165,7 @@ export async function acceptCandidate(
 		// Shuffle the culled list to randomize the order
 		culledWords = [...culledWords].sort(() => Math.random() - 0.5);
 		// console.log(`Bingo list: ${wordsToCull.length} -> ${culledWords.length} for turn ${newTurnsCount}`);
-		if (newTurnsCount >= 12) {
-			console.log('Culled list (using blanks):', culledWords);
-		}
+		// if (newTurnsCount >= 12) {console.log('Culled list (using blanks):', culledWords);}
 
 		// Score the turn
 		try {
