@@ -1,7 +1,7 @@
 import type { Turn, Direction } from './utils';
-import type { TileBag } from './api/updateTileBag';
-import { findViablePlays } from './api/findViablePlays';
-import { scoreTurn } from './api/scoreTurn';
+import type { TileBag } from './wolfram/updateTileBag';
+import { findViablePlays } from './wolfram/findViablePlays';
+import { scoreTurn } from './wolfram/scoreTurn';
 import { styleWithBlanks } from './styleWithBlanks';
 import { canFormWord, canFormWordWithBlanks, getTilesString } from './utils';
 
