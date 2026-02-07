@@ -8,8 +8,8 @@ import SubsequentTurnSelector from './SubsequentTurnSelector';
 import ResetBoard from './ResetBoard';
 import { BOARD_SIZE, INITIAL_TILEBAG } from '../lib/gameSetup';
 import { styleWithBlanks } from '../lib/styleWithBlanks';
-import { updateTileBag } from '../lib/api/updateTileBag';
-import { scoreTurn } from '../lib/api/scoreTurn';
+import { updateTileBag } from '../lib/wolfram/updateTileBag';
+import { scoreTurn } from '../lib/wolfram/scoreTurn';
 import { getTilesString } from '../lib/utils';
 import type { Turn } from '../lib/utils';
 

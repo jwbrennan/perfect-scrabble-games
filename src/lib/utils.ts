@@ -53,14 +53,18 @@ export interface ScrabbleGameData {
 	timestamp: Date;
 }
 
-export const placeWord = (board: string[][], placement: Placement): string[][] => {
+export const placeWord = (
+	board: string[][],
+	placement: Placement,
+): string[][] => {
 	const newBoard = board.map((row) => [...row]);
 	const { bingo, row, col, direction, blanks } = placement;
 
 	// Determine which index to style as blank
 	let blankIndex: number | null = null;
 	if (blanks && blanks.indices.length > 0) {
-		blankIndex = blanks.indices[Math.floor(Math.random() * blanks.indices.length)];
+		blankIndex =
+			blanks.indices[Math.floor(Math.random() * blanks.indices.length)];
 	}
 
 	let r = row;
@@ -88,7 +92,7 @@ export function getPlayedTiles(turns: Turn[]): Map<string, string> {
 	return played;
 }
 
-import type { TileBag } from './api/updateTileBag';
+import type { TileBag } from './wolfram/updateTileBag';
 
 /**
  * Converts TileBag to a string of tiles, e.g., 'AABB?C'
