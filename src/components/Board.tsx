@@ -7,6 +7,7 @@ interface Props {
 	onTileClick?: (row: number, col: number) => void;
 	selectedRow?: number | null;
 	selectedCol?: number | null;
+	interactive?: boolean;
 }
 
 export default function Board({
@@ -14,6 +15,7 @@ export default function Board({
 	onTileClick,
 	selectedRow,
 	selectedCol,
+	interactive = true,
 }: Props) {
 	const getSquareClass = (r: number, c: number) => {
 		{
@@ -40,14 +42,16 @@ export default function Board({
 					return (
 						<div
 							key={`${r}-${c}`}
-							onClick={() => onTileClick?.(r, c)}
+							onClick={() => interactive && onTileClick?.(r, c)}
 							className={clsx(
-								'w-8 h-8 flex items-center justify-center rounded-sm font-bold text-base shadow-md relative transition-all cursor-pointer',
+								'w-8 h-8 flex items-center justify-center rounded-sm font-bold text-base shadow-md relative transition-all',
+								interactive && 'cursor-pointer',
 								letter ?
 									'bg-amber-100 text-black border-2 border-amber-600 shadow-inner rounded-lg'
 								:	clsx(
 										getSquareClass(r, c),
-										'border border-green-900 hover:ring-4 hover:ring-yellow-300 hover:z-10',
+										'border border-green-900',
+										interactive && 'hover:ring-4 hover:ring-yellow-300 hover:z-10',
 										selectedRow === r &&
 											selectedCol === c &&
 											'ring-4 ring-yellow-300 z-10',

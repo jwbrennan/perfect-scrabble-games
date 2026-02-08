@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { getAuth } from 'firebase/auth';
 import type { Turn, FirestoreTurn, ScrabbleGameData } from '../lib/utils';
 
-// Import your interfaces (Turn, ScrabbleGameData)
-// import { Turn, ScrabbleGameData } from '../types'; // If you put them in a types.ts file
-
-// Define props for GameComplete
 interface GameCompleteProps {
 	turns: Turn[];
 }
@@ -25,6 +20,13 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 			const saveGameToFirestore = async () => {
 				setSaveStatus('saving');
 				try {
+					const auth = getAuth();
+					const user = auth.currentUser;
+					if (!user) {
+						throw new Error('User not authenticated');
+					}
+					const idToken = await user.getIdToken();
+
 					const turnsForFirestore: FirestoreTurn[] = turns.map(
 						(turn) => {
 							// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,11 +39,24 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 						timestamp: new Date(),
 					};
 
-					const docRef = await addDoc(
-						collection(db, 'perfect-scrabble-games'),
-						completedGame,
-					);
-					setSavedGameId(docRef.id);
+					const response = await fetch('/api/write', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${idToken}`
+						},
+						body: JSON.stringify({
+							collection: 'perfect-scrabble-games',
+							data: completedGame
+						})
+					});
+
+					if (!response.ok) {
+						throw new Error(`Failed to save: ${response.statusText}`);
+					}
+
+					const result = await response.json();
+					setSavedGameId(result.docId);
 					setSaveStatus('saved');
 				} catch (e: unknown) {
 					// Changed 'any' to 'unknown'

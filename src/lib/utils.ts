@@ -72,7 +72,9 @@ export const placeWord = (
 	for (let i = 0; i < bingo.length; i++) {
 		const letter = bingo[i];
 		const isBlank = blankIndex === i + 1;
-		newBoard[r][c] = isBlank ? '?' : letter;
+		if (newBoard[r][c] === '' || isBlank) {
+			newBoard[r][c] = isBlank ? '?' : letter;
+		}
 		if (direction === 'H') c++;
 		else r++;
 	}

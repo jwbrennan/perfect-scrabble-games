@@ -8,6 +8,7 @@ import {
 	limit,
 	startAfter,
 	DocumentSnapshot,
+	getCountFromServer,
 } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import Board from './Board';
@@ -29,8 +30,19 @@ const CollectionViewer: React.FC = () => {
 	const [sortBy, setSortBy] = useState<'timestamp' | 'totalScore'>(
 		'timestamp',
 	);
+	const [totalGames, setTotalGames] = useState<number>(0);
 
-	const PAGE_SIZE = 5;
+	const PAGE_SIZE = 10;
+
+	const fetchTotalCount = async () => {
+		try {
+			const q = query(collection(db, 'perfect-scrabble-games'));
+			const snapshot = await getCountFromServer(q);
+			setTotalGames(snapshot.data().count);
+		} catch (err) {
+			console.error('Error fetching total count:', err);
+		}
+	};
 
 	const fetchGames = async (loadMore = false) => {
 		try {
@@ -109,6 +121,7 @@ const CollectionViewer: React.FC = () => {
 	};
 
 	useEffect(() => {
+		fetchTotalCount();
 		setLoading(true);
 		setHasMore(true);
 		setLastDoc(null);
@@ -189,9 +202,14 @@ const CollectionViewer: React.FC = () => {
 		<div className="min-h-screen bg-gray-50 py-4 px-4">
 			<div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-2xl">
 				<div className="flex justify-between items-center mb-6">
-					<h1 className="text-2xl font-bold text-green-900">
-						Perfect Scrabble Games Collection
-					</h1>
+					<div>
+						<h1 className="text-2xl font-bold text-green-900">
+							Perfect Scrabble Games Collection
+						</h1>
+						<p className="text-sm text-gray-600 mt-1">
+							Displaying {games.length}/{totalGames} games
+						</p>
+					</div>
 					<div className="flex items-center space-x-4">
 						<div className="flex items-center space-x-2">
 							<label
@@ -292,6 +310,7 @@ const CollectionViewer: React.FC = () => {
 													onTileClick={() => {}}
 													selectedRow={null}
 													selectedCol={null}
+													interactive={false}
 												/>
 											</div>
 										</div>

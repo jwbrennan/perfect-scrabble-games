@@ -51,7 +51,7 @@ export async function findViablePlays(
 	}
 
 	const response = await fetch(
-		`https://www.wolframcloud.com/obj/josephb/Scrabble/APIs/FindViablePlays?${params.toString()}`,
+		`https://www.wolframcloud.com/obj/josephb/Scrabble/LiveAPIs/FindViablePlays?${params.toString()}`,
 		{
 			method: 'GET',
 			signal: abortSignal,
