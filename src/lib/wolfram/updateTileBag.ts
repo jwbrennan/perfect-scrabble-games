@@ -13,7 +13,7 @@ export interface UpdateTileBagResponse {
 export async function updateTileBag(
 	bingo: string,
 	currentTileBag: TileBag,
-	blanksRemaining: number
+	blanksRemaining: number,
 ): Promise<UpdateTileBagResponse> {
 	const params = new URLSearchParams({
 		bingo: bingo.toUpperCase(),
@@ -22,7 +22,7 @@ export async function updateTileBag(
 	});
 
 	const response = await fetch(
-		`https://www.wolframcloud.com/obj/josephb/Scrabble/APIs/UpdateTileBag?${params}`
+		`https://www.wolframcloud.com/obj/josephb/Scrabble/LiveAPIs/UpdateTileBag?${params}`,
 	);
 
 	if (!response.ok) {
