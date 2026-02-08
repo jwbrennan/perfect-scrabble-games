@@ -12,7 +12,6 @@ import { updateTileBag } from '../lib/wolfram/updateTileBag';
 import { scoreTurn } from '../lib/wolfram/scoreTurn';
 import { getTilesString } from '../lib/utils';
 import type { Turn } from '../lib/utils';
-import { getAuth } from 'firebase/auth';
 
 const SEVENS = sevenletterbingos
 	.trim()
@@ -69,46 +68,9 @@ export default function MainPage() {
 	const [turns, setTurns] = useState<Turn[]>([]);
 	const [showHowItWorks, setShowHowItWorks] = useState(false);
 
-	const testWrite = async () => {
-		const auth = getAuth();
-		const user = auth.currentUser;
-		if (!user) {
-			alert('Not logged in');
-			return;
-		}
-
-		try {
-			const idToken = await user.getIdToken();
-			const response = await fetch('/api/write', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${idToken}`,
-				},
-				body: JSON.stringify({
-					collection: 'test',
-					data: { message: 'Live test from app!' },
-				}),
-			});
-
-			const result = await response.json();
-			alert(`Result: ${JSON.stringify(result)}`);
-		} catch (error: unknown) {
-			alert(
-				`Error: ${error instanceof Error ? error.message : String(error)}`,
-			);
-		}
-	};
-
 	return (
 		<div className="min-h-screen bg-gray-50 py-4 px-4">
 			<div className="bg-white p-4 rounded-lg shadow-2xl mx-auto text-center">
-				<button
-					onClick={testWrite}
-					className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-				>
-					Test Write to DB
-				</button>
 				<div className="flex justify-center gap-8 items-start w-full">
 					<div className="flex flex-col items-center">
 						<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-xl">
