@@ -292,6 +292,7 @@ const CollectionViewer: React.FC = () => {
 													onTileClick={() => {}}
 													selectedRow={null}
 													selectedCol={null}
+													interactive={false}
 												/>
 											</div>
 										</div>
