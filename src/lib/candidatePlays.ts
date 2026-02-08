@@ -25,12 +25,28 @@ export interface CandidatePlay {
 }
 
 /**
- * Culls the word list based on the current tile bag and number of turns.
- * @param words - The list of words to cull.
- * @param tileBag - The current tile bag.
- * @param turnsCount - The current number of turns.
- * @returns The culled list of words.
+ * Computes the positions of all blanks on the board from the turns.
+ * @param turns - The list of turns.
+ * @returns An array of {row, col} positions where blanks are placed.
  */
+function computeBlanksPositions(turns: Turn[]): { row: number; col: number }[] {
+	const positions: { row: number; col: number }[] = [];
+	for (const turn of turns) {
+		if (turn.blanks) {
+			for (const index of turn.blanks.indices) {
+				let row = turn.row;
+				let col = turn.col;
+				if (turn.direction === 'H') {
+					col += index;
+				} else {
+					row += index;
+				}
+				positions.push({ row, col });
+			}
+		}
+	}
+	return positions;
+}
 export function cullWords(
 	words: string[],
 	tileBag: TileBag,
@@ -169,8 +185,10 @@ export async function acceptCandidate(
 
 		// Score the turn
 		try {
+			const blanksPositions = computeBlanksPositions(newTurns);
 			const scoreResponse = await scoreTurn(
 				JSON.stringify(newTurns[newTurns.length - 1]),
+				blanksPositions,
 			);
 			if (scoreResponse.success && scoreResponse.score !== undefined) {
 				newTurns[newTurns.length - 1].score = scoreResponse.score;
