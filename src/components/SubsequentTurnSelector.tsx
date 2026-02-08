@@ -166,7 +166,9 @@ export default function SubsequentTurnSelector({
 		if (isSearching) {
 			return (
 				<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-					<p className="text-2xl text-black">Searching...</p>
+					<p className="text-xl text-black">
+						Searching through {words.length} bingos...
+					</p>
 					<button
 						onClick={cancelSearch}
 						className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"

@@ -3,10 +3,6 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import type { Turn, FirestoreTurn, ScrabbleGameData } from '../lib/utils';
 
-// Import your interfaces (Turn, ScrabbleGameData)
-// import { Turn, ScrabbleGameData } from '../types'; // If you put them in a types.ts file
-
-// Define props for GameComplete
 interface GameCompleteProps {
 	turns: Turn[];
 }
