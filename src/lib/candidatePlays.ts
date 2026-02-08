@@ -34,8 +34,8 @@ function computeBlanksPositions(turns: Turn[]): { row: number; col: number }[] {
 	for (const turn of turns) {
 		if (turn.blanks) {
 			for (const index of turn.blanks.indices) {
-				let row = turn.row;
-				let col = turn.col;
+				let row = turn.row + 1; // Convert to 1-based index
+				let col = turn.col + 1; // Convert to 1-based index
 				if (turn.direction === 'H') {
 					col += index;
 				} else {
