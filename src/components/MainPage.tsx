@@ -75,39 +75,44 @@ export default function MainPage() {
 		<>
 			{showWelcome && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-					<div className="bg-white p-6 rounded-lg max-w-lg shadow-xl">
+					<div className="bg-white p-6 rounded-lg max-w-2xl shadow-xl">
 						<h2 className="text-xl font-bold mb-4 text-green-900">
 							Perfect Scrabble Games
 						</h2>
-						A Perfect Scrabble Game is one in which every turn is a
-						bingo! Assuming perfect word knowledge and very lucky
-						tiles, two players can, in principle, have seven bingos
-						each! This web app is a way to build your own 'Perfect
-						Scrabble Game'. The rules are simple:
+						A Perfect Scrabble Game is one in which every turn uses
+						all seven of the tiles on your rack (a bingo).
+						<br />
+						Assuming perfect word knowledge and very lucky tiles,
+						two players can, in principle, have seven bingos each!
+						<br />
+						A combined fourteen bingos leaves (100 tiles - 14 × 7
+						tiles per bingo) 2 tiles left in the bag at the end of
+						the game.
+						<br />
+						The objective of this web app is to build your own
+						'Perfect Scrabble Game'.
+						<br />
+						The instructions are simple:
 						<ul className="text-sm text-gray-700 list-disc list-inside space-y-2 text-left mt-4">
-							<li>Turn 1 is a random seven-letter word.</li>
 							<li>
-								Turns 2-12 are random eight-letter words that
-								overlap with exactly one existing tile.
+								Click 'Random Opening' to start with a random
+								seven-letter word. Ensure that this word passes
+								through the centre square.
 							</li>
 							<li>
-								Turns 13 and 14 allow the use of one blank tile
-								only.
+								For turns 2-12 you will be presented with a
+								random eight-letter bingo that may be played in
+								one or more locations, overlapping with exactly
+								one existing tile. You can click 'Next' and
+								'Previous' to see all viable plays for a given
+								bingo, or 'Skip' to move on to a new word.
 							</li>
 							<li>
-								The list of bingos is filtered based on the
-								words that are constructable with the tiles
-								remaining.
-							</li>
-							<li>
-								The app uses Wolfram Language back-end APIs to:
-								<ol className="list-decimal list-inside ml-4 mt-1 space-y-1">
-									<li>Update the tile bag</li>
-									<li>Find viable plays</li>
-									<li>Calculate the score</li>
-								</ol>
+								On turns 13 and 14 you are allowed to use a
+								maximum of one blank tile.
 							</li>
 						</ul>
+						<div className="mt-4">Have Fun!</div>
 						<div className="mt-4 text-center">
 							<button
 								onClick={() => {
@@ -160,8 +165,6 @@ export default function MainPage() {
 													className="px-12 py-4 bg-red-600 hover:bg-red-700 text-white text-2xl font-bold rounded-full shadow-xl transform hover:scale-105 transition"
 												>
 													Random Opening
-													<br />
-													Bingo
 												</button>
 											:	<OpeningBingoSelector
 													sevenLetterWords={SEVENS}
@@ -318,19 +321,6 @@ export default function MainPage() {
 									}}
 								/>
 							</div>
-							<footer className="mt-8 text-gray-600 text-sm">
-								Perfect Scrabble Games • Joseph Brennan 2026 •
-								Powered by{' '}
-								<a
-									href="https://wolfram.com"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-blue-600 hover:text-blue-800 underline"
-								>
-									Wolfram
-								</a>{' '}
-								Language
-							</footer>
 						</div>
 						<div className="flex flex-col gap-4">
 							<div className="flex gap-4 mb-4">
@@ -353,7 +343,15 @@ export default function MainPage() {
 										Planned Features
 									</button>
 									{showPlannedFeatures && (
-										<div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-20">
+										<div
+											className="absolute top-full mt-0 left-1/2 transform -translate-x-1/2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-20"
+											onMouseEnter={() =>
+												setShowPlannedFeatures(true)
+											}
+											onMouseLeave={() =>
+												setShowPlannedFeatures(false)
+											}
+										>
 											<ul className="text-sm text-gray-700 list-disc list-inside space-y-1 text-left">
 												<li>
 													Allow blanks to be played on
@@ -370,9 +368,15 @@ export default function MainPage() {
 											</ul>
 											<div className="mt-4 text-center">
 												<p className="text-sm text-gray-500">
-													Please email
-													josephb@wolfram.com with any
-													suggestions or feedback!
+													Please email{' '}
+													<a
+														href="mailto:josephb@wolfram.com"
+														className="text-blue-600 hover:text-blue-800 underline"
+													>
+														josephb@wolfram.com
+													</a>{' '}
+													with any suggestions or
+													feedback!
 												</p>
 											</div>
 										</div>
@@ -540,6 +544,40 @@ export default function MainPage() {
 							</div>
 						</div>
 					</div>
+					<footer className="mt-6 text-gray-600 text-sm text-center">
+						<div>
+							Perfect Scrabble Games • Joseph Brennan 2026 •{' '}
+							<a
+								href="https://github.com/jwbrennan/perfect-scrabble-games"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-blue-600 hover:text-blue-800 underline"
+							>
+								GitHub Repo
+							</a>{' '}
+							•{' '}
+							<a
+								href="https://jwbrennan.github.io/"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-blue-600 hover:text-blue-800 underline"
+							>
+								My Website
+							</a>
+						</div>
+						<div>
+							Powered by{' '}
+							<a
+								href="https://wolfram.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-blue-600 hover:text-blue-800 underline"
+							>
+								Wolfram
+							</a>{' '}
+							Language
+						</div>
+					</footer>
 				</div>
 			</div>
 		</>
