@@ -201,51 +201,52 @@ const CollectionViewer: React.FC = () => {
 	return (
 		<div className="min-h-screen bg-gray-50 py-4 px-4">
 			<div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-2xl">
-				<div className="flex justify-between items-center mb-6">
-					<div>
+				<div className="flex justify-between mb-2 items-center">
+					<Link
+						to="/"
+						className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded shadow-lg"
+					>
+						Back to Game
+					</Link>
+					<div className="flex-1 text-center">
 						<h1 className="text-2xl font-bold text-green-900">
 							Perfect Scrabble Games Collection
 						</h1>
-						<p className="text-sm text-gray-600 mt-1">
-							Displaying {games.length}/{totalGames} games
-						</p>
 					</div>
-					<div className="flex items-center space-x-4">
-						<div className="flex items-center space-x-2">
-							<label
-								htmlFor="sort-select"
-								className="text-sm font-medium text-gray-700"
+					<div className="items-end space-y-2">
+						<div className="flex items-center space-x-4">
+							<div className="flex items-center space-x-2">
+								<label
+									htmlFor="sort-select"
+									className="text-sm font-medium text-gray-700"
+								>
+									Sort by:
+								</label>
+								<select
+									id="sort-select"
+									value={sortBy}
+									onChange={(e) =>
+										setSortBy(
+											e.target.value as
+												| 'timestamp'
+												| 'totalScore',
+										)
+									}
+									className="px-1 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+								>
+									<option value="timestamp">Date</option>
+									<option value="totalScore">
+										Total Score
+									</option>
+								</select>
+							</div>
+							<button
+								onClick={exportAsJSON}
+								className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold rounded shadow-lg"
 							>
-								Sort by:
-							</label>
-							<select
-								id="sort-select"
-								value={sortBy}
-								onChange={(e) =>
-									setSortBy(
-										e.target.value as
-											| 'timestamp'
-											| 'totalScore',
-									)
-								}
-								className="px-1 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-							>
-								<option value="timestamp">Date</option>
-								<option value="totalScore">Total Score</option>
-							</select>
+								Export as JSON
+							</button>
 						</div>
-						<button
-							onClick={exportAsJSON}
-							className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold rounded shadow-lg"
-						>
-							Export as JSON
-						</button>
-						<Link
-							to="/"
-							className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded shadow-lg"
-						>
-							Back to Game
-						</Link>
 					</div>
 				</div>
 				{games.length === 0 ?
@@ -282,21 +283,21 @@ const CollectionViewer: React.FC = () => {
 									<div className="grid grid-cols-3 gap-4">
 										<div>
 											<h3 className="font-bold text-green-900">
-												Player A
+												Player A Score
 											</h3>
-											<p>Score: {scores.playerA}</p>
+											<p>{scores.playerA}</p>
 										</div>
 										<div>
 											<h3 className="font-bold text-green-900">
-												Player B
+												Player B Score
 											</h3>
-											<p>Score: {scores.playerB}</p>
+											<p>{scores.playerB}</p>
 										</div>
 										<div>
 											<h3 className="font-bold text-green-900">
-												Total
+												Total Score
 											</h3>
-											<p>Score: {scores.total}</p>
+											<p>{scores.total}</p>
 										</div>
 									</div>
 									<details className="mt-4">
@@ -397,6 +398,9 @@ const CollectionViewer: React.FC = () => {
 						})}
 						{sortBy === 'timestamp' && hasMore && (
 							<div className="text-center mt-6">
+								<p className="text-sm text-gray-600 mb-4">
+									Displaying {games.length}/{totalGames} games
+								</p>
 								<button
 									onClick={loadMoreGames}
 									disabled={loadingMore}
