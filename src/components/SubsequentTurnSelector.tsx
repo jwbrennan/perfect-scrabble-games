@@ -16,7 +16,6 @@ interface Props {
 	board: string[][];
 	setBoard: (b: string[][]) => void;
 	setTurns: React.Dispatch<React.SetStateAction<Turn[]>>;
-	onCancel?: () => void;
 }
 
 export default function SubsequentTurnSelector({
@@ -25,7 +24,6 @@ export default function SubsequentTurnSelector({
 	board,
 	setBoard,
 	setTurns,
-	onCancel,
 }: Props) {
 	const [words, setWords] = useState<string[]>(() =>
 		[...eightLetterWords].sort(() => Math.random() - 0.5),
@@ -173,7 +171,7 @@ export default function SubsequentTurnSelector({
 						onClick={cancelSearch}
 						className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
 					>
-						Cancel Search
+						Give Up!
 					</button>
 				</div>
 			);
@@ -181,18 +179,10 @@ export default function SubsequentTurnSelector({
 			return (
 				<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center py-6">
 					<p className="text-xl text-gray-700 mb-4 text-center max-w-xs">
-						Click 'Reset Board'
+						Bad luck!
 						<br />
-						to try again!
+						Click 'Reset Board' to try again.
 					</p>
-					{onCancel && (
-						<button
-							onClick={onCancel}
-							className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-						>
-							Cancel
-						</button>
-					)}
 				</div>
 			);
 		} else {
@@ -219,7 +209,6 @@ export default function SubsequentTurnSelector({
 			onSkip={skipWord}
 			onPrevious={goToPreviousCandidate}
 			onNext={goToNextCandidate}
-			onCancel={onCancel}
 		/>
 	);
 }
