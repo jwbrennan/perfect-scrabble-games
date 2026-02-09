@@ -12,7 +12,6 @@ interface Props {
 	onSkip: () => void;
 	onPrevious: () => void;
 	onNext: () => void;
-	onCancel?: () => void;
 }
 
 export default function CandidatePlayDisplay({
@@ -24,7 +23,6 @@ export default function CandidatePlayDisplay({
 	onSkip,
 	onPrevious,
 	onNext,
-	onCancel,
 }: Props) {
 	// Preview current candidate on board
 	useEffect(() => {
@@ -107,17 +105,6 @@ export default function CandidatePlayDisplay({
 					</button>
 				</div>
 			</div>
-
-			{onCancel && (
-				<div className="text-center">
-					<button
-						onClick={onCancel}
-						className="text-gray-500 hover:text-gray-700 underline"
-					>
-						Cancel
-					</button>
-				</div>
-			)}
 		</div>
 	);
 }
