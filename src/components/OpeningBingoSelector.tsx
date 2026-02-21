@@ -92,15 +92,15 @@ export default function OpeningBingoSelector({
 		);
 	};
 	return (
-		<div className="bg-white rounded-2xl shadow-2xl p-6 mt-4 w-[32rem] mx-auto space-y-4">
+		<div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6 mt-4 mb-4 w-full md:w-[32rem] mx-auto space-y-4">
 			<div className="flex justify-center gap-3">
 				{openingBingo.split('').map((l, i) => (
 					<div
 						key={i}
-						className="relative w-12 h-12 bg-amber-100 border-2 border-amber-600 rounded-lg shadow-xl flex items-center justify-center"
+						className="relative w-8 h-8 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-600 rounded-lg shadow-xl flex items-center justify-center"
 					>
-						<span className="text-xl font-bold">{l}</span>
-						<span className="absolute bottom-1 right-1 text-xs font-bold">
+						<span className="text-lg md:text-xl font-bold">{l}</span>
+						<span className="absolute bottom-0.5 md:bottom-1 right-0.5 md:right-1 text-xs font-bold">
 							{LETTER_POINTS[l]}
 						</span>
 					</div>
@@ -122,7 +122,7 @@ export default function OpeningBingoSelector({
 				<button
 					onClick={() => tryPlace('H')}
 					disabled={startRow === null}
-					className="px-3 py-3 bg-black text-white text-lg font-bold rounded-lg
+					className="px-2 py-2 md:px-3 md:py-3 bg-black text-white text-sm md:text-lg font-bold rounded-lg
                    disabled:bg-gray-400 disabled:cursor-not-allowed
                    transition hover:scale-105"
 				>
@@ -132,7 +132,7 @@ export default function OpeningBingoSelector({
 				<button
 					onClick={() => tryPlace('V')}
 					disabled={startRow === null}
-					className="px-3 py-3 bg-black text-white text-lg font-bold rounded-lg
+					className="px-2 py-2 md:px-3 md:py-3 bg-black text-white text-sm md:text-lg font-bold rounded-lg
                    disabled:bg-gray-400 disabled:cursor-not-allowed
                    transition hover:scale-105"
 				>
@@ -156,7 +156,7 @@ export default function OpeningBingoSelector({
 							onSquareSelected(null, null);
 						})()
 					}
-					className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white text-lg rounded-full"
+					className="px-4 py-2 md:px-6 md:py-3 bg-orange-600 hover:bg-orange-700 text-white text-sm md:text-lg rounded-full"
 				>
 					New Bingo
 				</button>

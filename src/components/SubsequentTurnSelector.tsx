@@ -179,7 +179,7 @@ export default function SubsequentTurnSelector({
 			return (
 				<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center py-6">
 					<p className="text-xl text-gray-700 mb-4 text-center max-w-xs">
-						Bad luck!
+						Bad luck! No viable plays could be found.
 						<br />
 						Click 'Reset Board' to try again.
 					</p>

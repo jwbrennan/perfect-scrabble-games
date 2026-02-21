@@ -34,7 +34,7 @@ export default function Board({
 
 	return (
 		<div
-			className="grid gap-1 p-4 bg-green-800 rounded overflow-visible w-full h-full"
+			className="grid gap-1 p-2 md:p-4 bg-green-800 rounded overflow-visible w-full h-full"
 			style={{ gridTemplateColumns: 'repeat(15, minmax(0, 1fr))' }}
 		>
 			{board.map((row, r) =>
@@ -44,7 +44,7 @@ export default function Board({
 							key={`${r}-${c}`}
 							onClick={() => interactive && onTileClick?.(r, c)}
 							className={clsx(
-								'w-8 h-8 flex items-center justify-center rounded-sm font-bold text-base shadow-md relative transition-all',
+								'w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-sm font-bold text-sm md:text-base shadow-md relative transition-all',
 								interactive && 'cursor-pointer',
 								letter ?
 									'bg-amber-100 text-black border-2 border-amber-600 shadow-inner rounded-lg'

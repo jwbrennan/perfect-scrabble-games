@@ -134,7 +134,7 @@ export default function MainPage() {
 				<div className="bg-white p-4 rounded-lg shadow-2xl mx-auto text-center">
 					<div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 items-center md:items-start w-full">
 						<div className="flex flex-col items-center">
-							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-full md:max-w-xl transform scale-75 md:scale-100">
+							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-full md:max-w-xl transform scale-90 md:scale-100">
 								<Board
 									board={board}
 									onTileClick={handleBoardClick}
@@ -143,7 +143,7 @@ export default function MainPage() {
 								/>
 							</div>
 							<div
-								className={`mt-2 flex items-center justify-between h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
+								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-between h-[12rem] md:h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
 							>
 								<div className="flex flex-col items-center">
 									{isFirstTurnDone ?
@@ -162,7 +162,7 @@ export default function MainPage() {
 															true,
 														)
 													}
-													className="px-12 py-4 bg-red-600 hover:bg-red-700 text-white text-2xl font-bold rounded-full shadow-xl transform hover:scale-105 transition"
+													className="px-6 py-2 text-lg md:px-12 md:py-4 md:text-2xl bg-red-600 hover:bg-red-700 text-white font-bold rounded-full shadow-xl transform hover:scale-105 transition"
 												>
 													Random Opening
 												</button>
