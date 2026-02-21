@@ -202,7 +202,7 @@ export default function MainPage() {
 								/>
 							</div>
 							<div
-								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-between h-[12rem] md:h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
+								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-between min-h-[12rem] md:min-h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
 							>
 								<div className="flex flex-col items-center">
 									{isFirstTurnDone ?
