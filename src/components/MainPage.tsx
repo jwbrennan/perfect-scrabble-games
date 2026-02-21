@@ -132,7 +132,7 @@ export default function MainPage() {
 			)}
 			<div className="min-h-screen bg-gray-50 py-4 px-4">
 				<div className="bg-white p-4 rounded-lg shadow-2xl mx-auto text-center">
-					<div className="flex justify-center gap-8 items-start w-full">
+					<div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 items-center md:items-start w-full">
 						<div className="flex flex-col items-center">
 							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-xl">
 								<Board
@@ -143,7 +143,7 @@ export default function MainPage() {
 								/>
 							</div>
 							<div
-								className={`mt-2 flex items-center justify-between h-[16rem] relative ${isFirstTurnDone || isPlacingOpening ? 'w-[44rem]' : 'w-[30rem]'}`}
+								className={`mt-2 flex items-center justify-between h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
 							>
 								<div className="flex flex-col items-center">
 									{isFirstTurnDone ?
@@ -383,12 +383,12 @@ export default function MainPage() {
 									)}
 								</div>
 							</div>
-							<div className="w-96 bg-white rounded-xl shadow-xl p-2 text-left">
+							<div className="w-full md:w-96 bg-white rounded-xl shadow-xl p-2 text-left">
 								<h2 className="text-xl font-bold mb-4 text-green-900">
 									Scoreboard
 								</h2>
 
-								<div className="grid grid-cols-2 gap-4">
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div>
 										<h3 className="text-lg font-bold mb-2 text-green-900">
 											Player A

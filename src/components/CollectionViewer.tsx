@@ -201,7 +201,7 @@ const CollectionViewer: React.FC = () => {
 	return (
 		<div className="min-h-screen bg-gray-50 py-4 px-4">
 			<div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-2xl">
-				<div className="flex justify-between mb-2 items-center">
+				<div className="flex flex-col md:flex-row justify-between mb-2 items-center gap-4">
 					<Link
 						to="/"
 						className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded shadow-lg"
@@ -213,7 +213,7 @@ const CollectionViewer: React.FC = () => {
 							Perfect Scrabble Games Collection
 						</h1>
 					</div>
-					<div className="items-end space-y-2">
+					<div className="flex flex-col md:flex-row md:items-end space-y-2 md:space-y-0 md:space-x-4">
 						<div className="flex items-center space-x-4">
 							<div className="flex items-center space-x-2">
 								<label
@@ -280,7 +280,7 @@ const CollectionViewer: React.FC = () => {
 											{game.timestamp.toLocaleString()}
 										</p>
 									</div>
-									<div className="grid grid-cols-3 gap-4">
+									<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 										<div>
 											<h3 className="font-bold text-green-900">
 												Player A Score
@@ -305,7 +305,7 @@ const CollectionViewer: React.FC = () => {
 											View Board
 										</summary>
 										<div className="mt-2 flex justify-center">
-											<div className="transform scale-100">
+											<div className="transform scale-75 md:scale-100">
 												<Board
 													board={finalBoard}
 													onTileClick={() => {}}
@@ -320,8 +320,8 @@ const CollectionViewer: React.FC = () => {
 										<summary className="cursor-pointer text-blue-600">
 											View Turns
 										</summary>
-										<div className="mt-2">
-											<table className="table-auto w-full border-collapse border border-gray-300">
+										<div className="mt-2 overflow-x-auto">
+											<table className="table-auto w-full border-collapse border border-gray-300 min-w-[800px]">
 												<thead>
 													<tr className="bg-gray-100">
 														<th className="border border-gray-300 px-4 py-2">
