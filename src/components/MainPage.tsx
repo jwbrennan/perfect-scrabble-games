@@ -202,7 +202,7 @@ export default function MainPage() {
 								/>
 							</div>
 							<div
-								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-between min-h-[12rem] md:min-h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
+								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-center min-h-[12rem] md:min-h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
 							>
 								<div className="flex flex-col items-center">
 									{isFirstTurnDone ?
@@ -363,24 +363,6 @@ export default function MainPage() {
 									}
 								</div>
 
-								<ResetBoard
-									onClear={() => {
-										setBoard(
-											Array(BOARD_SIZE)
-												.fill(null)
-												.map(() =>
-													Array(BOARD_SIZE).fill(''),
-												),
-										);
-										setTurns([]);
-										setTileBag(INITIAL_TILEBAG);
-										setIsPlacingOpening(false);
-										setIsFirstTurnDone(false);
-										setSelectedRow(null);
-										setSelectedCol(null);
-										console.clear();
-									}}
-								/>
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">
@@ -543,6 +525,24 @@ export default function MainPage() {
 									</p>
 								</div>
 							</div>
+							<ResetBoard
+								onClear={() => {
+									setBoard(
+										Array(BOARD_SIZE)
+											.fill(null)
+											.map(() =>
+												Array(BOARD_SIZE).fill(''),
+											),
+									);
+									setTurns([]);
+									setTileBag(INITIAL_TILEBAG);
+									setIsPlacingOpening(false);
+									setIsFirstTurnDone(false);
+									setSelectedRow(null);
+									setSelectedCol(null);
+									console.clear();
+								}}
+							/>
 						</div>
 					</div>
 					<footer className="mt-6 text-gray-600 text-sm text-center">

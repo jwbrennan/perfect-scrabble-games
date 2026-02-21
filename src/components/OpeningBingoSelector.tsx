@@ -93,16 +93,16 @@ export default function OpeningBingoSelector({
 	};
 	return (
 		<div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6 mt-4 mb-4 w-full md:w-[32rem] mx-auto space-y-4">
-			<div className="flex justify-center gap-3">
+			<div className="flex justify-center gap-2">
 				{openingBingo.split('').map((l, i) => (
 					<div
 						key={i}
-						className="relative w-8 h-8 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-600 rounded-lg shadow-xl flex items-center justify-center"
+						className="relative w-7 h-7 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-600 rounded-sm shadow-xl flex items-center justify-center"
 					>
-						<span className="text-base md:text-lg font-semibold md:font-bold">
+						<span className="text-sm md:text-lg font-semibold md:font-bold">
 							{l}
 						</span>
-						<span className="absolute bottom-0.5 md:bottom-1 right-0.5 md:right-1 text-[10px] md:text-xs font-normal md:font-bold">
+						<span className="absolute bottom-0 md:bottom-1 right-0 md:right-1 text-[8px] md:text-xs font-normal md:font-bold">
 							{LETTER_POINTS[l] || 0}
 						</span>
 					</div>

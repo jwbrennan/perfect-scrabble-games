@@ -51,7 +51,8 @@ export default function Board({
 								:	clsx(
 										getSquareClass(r, c),
 										'border border-green-900',
-										interactive && 'hover:ring-4 hover:ring-yellow-300 hover:z-10',
+										interactive &&
+											'hover:ring-4 hover:ring-yellow-300 hover:z-10',
 										selectedRow === r &&
 											selectedCol === c &&
 											'ring-4 ring-yellow-300 z-10',
