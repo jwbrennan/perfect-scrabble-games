@@ -163,7 +163,7 @@ export default function SubsequentTurnSelector({
 		}
 		if (isSearching) {
 			return (
-				<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+				<div className="text-center mb-4">
 					<p className="text-xl text-black">
 						Searching through {words.length} bingos...
 					</p>
@@ -177,7 +177,7 @@ export default function SubsequentTurnSelector({
 			);
 		} else if (noMoreFound) {
 			return (
-				<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center flex flex-col items-center justify-center py-6">
+				<div className="text-center flex flex-col items-center justify-center py-6">
 					<p className="text-xl text-gray-700 mb-4 text-center max-w-xs">
 						Bad luck! No viable plays could be found.
 						<br />
