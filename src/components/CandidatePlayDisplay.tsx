@@ -48,16 +48,18 @@ export default function CandidatePlayDisplay({
 	const currentCandidate = candidates[currentCandidateIndex];
 
 	return (
-		<div className="bg-white rounded-2xl shadow-2xl p-6 mt-4 max-w-4xl mx-auto space-y-4">
+		<div className="bg-white rounded-2xl shadow-2xl p-4 md:p-6 mt-4 mb-4 w-full md:max-w-4xl mx-auto space-y-4">
 			<div className="text-center space-y-3">
 				<div className="flex justify-center gap-3 flex-wrap">
 					{currentCandidate.bingo.split('').map((l, i) => (
 						<div
 							key={i}
-							className="relative w-12 h-12 bg-amber-100 border-2 border-amber-600 rounded-lg shadow-xl flex items-center justify-center"
+							className="relative w-8 h-8 md:w-12 md:h-12 bg-amber-100 border-2 border-amber-600 rounded-lg shadow-xl flex items-center justify-center"
 						>
-							<span className="text-xl font-bold">{l}</span>
-							<span className="absolute bottom-1 right-1 text-xs font-bold">
+							<span className="text-base md:text-lg font-semibold md:font-bold">
+								{l}
+							</span>
+							<span className="absolute bottom-0.5 md:bottom-1 right-0.5 md:right-1 text-[10px] md:text-xs font-normal md:font-bold">
 								{LETTER_POINTS[l] || 0}
 							</span>
 						</div>
@@ -71,7 +73,7 @@ export default function CandidatePlayDisplay({
 					<button
 						onClick={onPrevious}
 						disabled={currentCandidateIndex === 0}
-						className="px-4 py-2 bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+						className="px-3 py-2 md:px-4 md:py-2 bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
 					>
 						Previous
 					</button>
@@ -83,7 +85,7 @@ export default function CandidatePlayDisplay({
 						disabled={
 							currentCandidateIndex === candidates.length - 1
 						}
-						className="px-4 py-2 bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+						className="px-3 py-2 md:px-4 md:py-2 bg-gray-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
 					>
 						Next
 					</button>
@@ -93,13 +95,13 @@ export default function CandidatePlayDisplay({
 				<div className="flex justify-center gap-3">
 					<button
 						onClick={onSkip}
-						className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg"
+						className="px-3 py-2 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm md:text-base"
 					>
 						Skip This Word
 					</button>
 					<button
 						onClick={() => onAccept(currentCandidate)}
-						className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-base"
+						className="px-4 py-2 md:px-6 md:py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-sm md:text-base"
 					>
 						Accept This Play
 					</button>
