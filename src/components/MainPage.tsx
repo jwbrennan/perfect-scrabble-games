@@ -75,7 +75,7 @@ export default function MainPage() {
 		<>
 			{showWelcome && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-					<div className="bg-white p-6 rounded-lg max-w-2xl shadow-xl">
+					<div className="bg-white p-4 md:p-6 rounded-lg max-w-sm md:max-w-2xl shadow-xl mx-4">
 						<h2 className="text-xl font-bold mb-4 text-green-900">
 							Perfect Scrabble Games
 						</h2>
@@ -134,7 +134,7 @@ export default function MainPage() {
 				<div className="bg-white p-4 rounded-lg shadow-2xl mx-auto text-center">
 					<div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 items-center md:items-start w-full">
 						<div className="flex flex-col items-center">
-							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-xl">
+							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-full md:max-w-xl transform scale-75 md:scale-100">
 								<Board
 									board={board}
 									onTileClick={handleBoardClick}
@@ -531,7 +531,7 @@ export default function MainPage() {
 								<div className="mt-4 text-left">
 									<p className="text-lg font-semibold break-words">
 										Tile Bag:{' '}
-										<span className="font-mono">
+										<span className="font-mono break-all">
 											{getTilesString(
 												turns.length > 0 ?
 													turns[turns.length - 1]
