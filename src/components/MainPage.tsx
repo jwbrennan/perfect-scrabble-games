@@ -75,7 +75,7 @@ export default function MainPage() {
 		<>
 			{showWelcome && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-					<div className="bg-white p-6 rounded-lg max-w-2xl shadow-xl">
+					<div className="bg-white p-4 md:p-6 rounded-lg max-w-sm md:max-w-2xl shadow-xl mx-4">
 						<h2 className="text-xl font-bold mb-4 text-green-900">
 							Perfect Scrabble Games
 						</h2>
@@ -132,9 +132,68 @@ export default function MainPage() {
 			)}
 			<div className="min-h-screen bg-gray-50 py-4 px-4">
 				<div className="bg-white p-4 rounded-lg shadow-2xl mx-auto text-center">
-					<div className="flex justify-center gap-8 items-start w-full">
+					<div className="flex justify-center gap-4 mb-4">
+						<Link
+							to="/collection"
+							className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded shadow-lg"
+						>
+							View Collection
+						</Link>
+						<div className="relative">
+							<button
+								onMouseEnter={() =>
+									setShowPlannedFeatures(true)
+								}
+								onMouseLeave={() =>
+									setShowPlannedFeatures(false)
+								}
+								className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded shadow-lg"
+							>
+								Planned Features
+							</button>
+							{showPlannedFeatures && (
+								<div
+									className="absolute top-full mt-0 left-1/2 transform -translate-x-1/2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-20"
+									onMouseEnter={() =>
+										setShowPlannedFeatures(true)
+									}
+									onMouseLeave={() =>
+										setShowPlannedFeatures(false)
+									}
+								>
+									<ul className="text-sm text-gray-700 list-disc list-inside space-y-1 text-left">
+										<li>
+											Allow blanks to be played on any
+											turn.
+										</li>
+										<li>
+											Allow multi-square overlaps and
+											hooks.
+										</li>
+										<li>
+											Data analytics on the current
+											collection.
+										</li>
+									</ul>
+									<div className="mt-4 text-center">
+										<p className="text-sm text-gray-500">
+											Please email{' '}
+											<a
+												href="mailto:josephb@wolfram.com"
+												className="text-blue-600 hover:text-blue-800 underline"
+											>
+												josephb@wolfram.com
+											</a>{' '}
+											with any suggestions or feedback!
+										</p>
+									</div>
+								</div>
+							)}
+						</div>
+					</div>
+					<div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 items-center md:items-start w-full">
 						<div className="flex flex-col items-center">
-							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-xl">
+							<div className="bg-green-900 p-2 rounded-lg shadow-2xl max-w-full md:max-w-xl transform scale-90 md:scale-100">
 								<Board
 									board={board}
 									onTileClick={handleBoardClick}
@@ -143,7 +202,7 @@ export default function MainPage() {
 								/>
 							</div>
 							<div
-								className={`mt-2 flex items-center justify-between h-[16rem] relative ${isFirstTurnDone || isPlacingOpening ? 'w-[44rem]' : 'w-[30rem]'}`}
+								className={`mt-2 mb-4 flex flex-col md:flex-row items-center md:justify-center min-h-[12rem] md:min-h-[16rem] relative w-full max-w-[44rem] md:max-w-none ${isFirstTurnDone || isPlacingOpening ? 'md:w-[44rem]' : 'md:w-[30rem]'}`}
 							>
 								<div className="flex flex-col items-center">
 									{isFirstTurnDone ?
@@ -162,7 +221,9 @@ export default function MainPage() {
 															true,
 														)
 													}
-													className="px-12 py-4 bg-red-600 hover:bg-red-700 text-white text-2xl font-bold rounded-full shadow-xl transform hover:scale-105 transition"
+													className="px-6 py-2 text-lg md:px-12 md:py-4 md:text-2xl bg-red-600 
+													hover:bg-red-700 text-white font-bold rounded-full 
+													shadow-xl transform hover:scale-105 transition mb-4"
 												>
 													Random Opening
 												</button>
@@ -302,88 +363,10 @@ export default function MainPage() {
 									}
 								</div>
 
-								<ResetBoard
-									onClear={() => {
-										setBoard(
-											Array(BOARD_SIZE)
-												.fill(null)
-												.map(() =>
-													Array(BOARD_SIZE).fill(''),
-												),
-										);
-										setTurns([]);
-										setTileBag(INITIAL_TILEBAG);
-										setIsPlacingOpening(false);
-										setIsFirstTurnDone(false);
-										setSelectedRow(null);
-										setSelectedCol(null);
-										console.clear();
-									}}
-								/>
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">
-							<div className="flex gap-4 mb-4">
-								<Link
-									to="/collection"
-									className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded shadow-lg"
-								>
-									View Collection
-								</Link>
-								<div className="relative">
-									<button
-										onMouseEnter={() =>
-											setShowPlannedFeatures(true)
-										}
-										onMouseLeave={() =>
-											setShowPlannedFeatures(false)
-										}
-										className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded shadow-lg"
-									>
-										Planned Features
-									</button>
-									{showPlannedFeatures && (
-										<div
-											className="absolute top-full mt-0 left-1/2 transform -translate-x-1/2 w-80 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-20"
-											onMouseEnter={() =>
-												setShowPlannedFeatures(true)
-											}
-											onMouseLeave={() =>
-												setShowPlannedFeatures(false)
-											}
-										>
-											<ul className="text-sm text-gray-700 list-disc list-inside space-y-1 text-left">
-												<li>
-													Allow blanks to be played on
-													any turn.
-												</li>
-												<li>
-													Allow multi-square overlaps
-													and hooks.
-												</li>
-												<li>
-													Data analytics on the
-													current collection.
-												</li>
-											</ul>
-											<div className="mt-4 text-center">
-												<p className="text-sm text-gray-500">
-													Please email{' '}
-													<a
-														href="mailto:josephb@wolfram.com"
-														className="text-blue-600 hover:text-blue-800 underline"
-													>
-														josephb@wolfram.com
-													</a>{' '}
-													with any suggestions or
-													feedback!
-												</p>
-											</div>
-										</div>
-									)}
-								</div>
-							</div>
-							<div className="w-96 bg-white rounded-xl shadow-xl p-2 text-left">
+							<div className="w-full md:w-96 bg-white rounded-xl shadow-xl p-2 text-left">
 								<h2 className="text-xl font-bold mb-4 text-green-900">
 									Scoreboard
 								</h2>
@@ -531,7 +514,7 @@ export default function MainPage() {
 								<div className="mt-4 text-left">
 									<p className="text-lg font-semibold break-words">
 										Tile Bag:{' '}
-										<span className="font-mono">
+										<span className="font-mono break-all">
 											{getTilesString(
 												turns.length > 0 ?
 													turns[turns.length - 1]
@@ -542,6 +525,24 @@ export default function MainPage() {
 									</p>
 								</div>
 							</div>
+							<ResetBoard
+								onClear={() => {
+									setBoard(
+										Array(BOARD_SIZE)
+											.fill(null)
+											.map(() =>
+												Array(BOARD_SIZE).fill(''),
+											),
+									);
+									setTurns([]);
+									setTileBag(INITIAL_TILEBAG);
+									setIsPlacingOpening(false);
+									setIsFirstTurnDone(false);
+									setSelectedRow(null);
+									setSelectedCol(null);
+									console.clear();
+								}}
+							/>
 						</div>
 					</div>
 					<footer className="mt-6 text-gray-600 text-sm text-center">
