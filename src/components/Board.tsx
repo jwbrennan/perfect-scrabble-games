@@ -34,7 +34,7 @@ export default function Board({
 
 	return (
 		<div
-			className="grid gap-1 p-2 md:p-4 bg-green-800 rounded overflow-visible w-full h-full"
+			className="grid gap-1 p-2 md:p-4 md:gap-1 bg-green-800 rounded overflow-visible w-full h-full"
 			style={{ gridTemplateColumns: 'repeat(15, minmax(0, 1fr))' }}
 		>
 			{board.map((row, r) =>
@@ -44,7 +44,7 @@ export default function Board({
 							key={`${r}-${c}`}
 							onClick={() => interactive && onTileClick?.(r, c)}
 							className={clsx(
-								'w-6 h-6 md:w-8 md:h-8 flex items-center justify-center rounded-sm font-bold text-sm md:text-base shadow-md relative transition-all',
+								'w-5 h-5 md:w-8 md:h-8 flex items-center justify-center rounded-sm font-bold text-sm md:text-base shadow-md relative transition-all',
 								interactive && 'cursor-pointer',
 								letter ?
 									'bg-amber-100 text-black border-2 border-amber-600 shadow-inner rounded-lg'
@@ -52,16 +52,16 @@ export default function Board({
 										getSquareClass(r, c),
 										'border border-green-900',
 										interactive &&
-											'hover:ring-4 hover:ring-yellow-300 hover:z-10',
+											'hover:ring-2 md:hover:ring-4 hover:ring-yellow-300 hover:z-10',
 										selectedRow === r &&
 											selectedCol === c &&
-											'ring-4 ring-yellow-300 z-10',
+											'ring-2 md:ring-4 ring-yellow-300 z-10',
 									),
 							)}
 						>
 							{letter}
 							{letter && (
-								<span className="absolute text-[6px] bottom-0.5 right-0.5 font-bold text-black opacity-90 leading-none">
+								<span className="absolute text-[6px] bottom-0.5 right-0.5 font-bold text-black opacity-90 leading-none hidden md:block">
 									{LETTER_POINTS[letter]}
 								</span>
 							)}

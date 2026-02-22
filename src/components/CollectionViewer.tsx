@@ -305,7 +305,7 @@ const CollectionViewer: React.FC = () => {
 											View Board
 										</summary>
 										<div className="mt-2 flex justify-center">
-											<div className="transform scale-75 md:scale-100">
+											<div className="transform scale-60 md:scale-85">
 												<Board
 													board={finalBoard}
 													onTileClick={() => {}}
