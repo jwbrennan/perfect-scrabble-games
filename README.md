@@ -2,7 +2,8 @@
 
 ## Description
 
-Perfect Scrabble Games is a web-based Scrabble game application built with React and TypeScript. It provides an interactive interface for playing Scrabble, including features such as:
+Perfect Scrabble Games is a web-based Scrabble game application built with React and TypeScript. 
+It provides an interactive interface for playing Scrabble, including features such as:
 
 - Game board visualization
 - Candidate play suggestions and display
@@ -12,7 +13,11 @@ Perfect Scrabble Games is a web-based Scrabble game application built with React
 - Game completion tracking
 - Integration with Firebase for data connectivity
 
-The app leverages modern web technologies to offer a seamless Scrabble playing experience, with components for board rendering, play analysis, and game state management.
+The app leverages modern web technologies to offer a seamless Scrabble playing experience, 
+with components for board rendering, play analysis, and game state management.
+
+The app uses Wolfram Language APIs as the back-end, which are defined in this 
+[repository](https://github.com/jwbrennan/wolfram-scrabble-paclet).
 
 ## Dependencies
 
