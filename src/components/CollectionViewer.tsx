@@ -18,6 +18,7 @@ import type { ScrabbleGameData } from '../lib/utils';
 
 interface GameWithId extends ScrabbleGameData {
 	id: string;
+	timestamp: Date;
 }
 
 const CollectionViewer: React.FC = () => {
@@ -68,6 +69,12 @@ const CollectionViewer: React.FC = () => {
 				});
 				setGames(gamesData);
 				setHasMore(false); // No pagination for total score sort
+				console.log(
+					'CollectionViewer: loaded',
+					gamesData.length,
+					'games (sorted by totalScore)',
+					gamesData,
+				);
 			} else {
 				// For timestamp sorting, use pagination
 				let q = query(
@@ -99,8 +106,20 @@ const CollectionViewer: React.FC = () => {
 
 				if (loadMore) {
 					setGames((prev) => [...prev, ...gamesData]);
+					console.log(
+						'CollectionViewer: appended',
+						gamesData.length,
+						'games; appended ids=',
+						gamesData,
+					);
 				} else {
 					setGames(gamesData);
+					console.log(
+						'CollectionViewer: loaded',
+						gamesData.length,
+						'games (sorted by timestamp)',
+						gamesData,
+					);
 				}
 
 				if (querySnapshot.docs.length < PAGE_SIZE) {
@@ -384,7 +403,7 @@ const CollectionViewer: React.FC = () => {
 															</td>
 															<td className="border border-gray-300 px-4 py-2">
 																{turn.blanks ?
-																	`${turn.blanks.tile} (${turn.blanks.indices.join(', ')})`
+																	`${turn.blanks.tile} (${Array.isArray(turn.blanks.indices) ? turn.blanks.indices.join(', ') : ''})`
 																:	'-'}
 															</td>
 														</tr>

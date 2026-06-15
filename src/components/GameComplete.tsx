@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth } from 'firebase/auth';
 import type { Turn, FirestoreTurn, ScrabbleGameData } from '../lib/utils';
 
 interface GameCompleteProps {
@@ -20,13 +19,6 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 			const saveGameToFirestore = async () => {
 				setSaveStatus('saving');
 				try {
-					const auth = getAuth();
-					const user = auth.currentUser;
-					if (!user) {
-						throw new Error('User not authenticated');
-					}
-					const idToken = await user.getIdToken();
-
 					const turnsForFirestore: FirestoreTurn[] = turns.map(
 						(turn) => {
 							// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,23 +28,22 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 					);
 					const completedGame: ScrabbleGameData = {
 						turns: turnsForFirestore,
-						timestamp: new Date(),
 					};
 
-					const response = await fetch('/api/write', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${idToken}`
+					const response = await fetch(
+						'https://www.wolframcloud.com/obj/josephb/Scrabble/LiveAPIs/WriteToFirestore',
+						{
+							method: 'POST',
+							body: new URLSearchParams({
+								data: JSON.stringify(completedGame),
+							}),
 						},
-						body: JSON.stringify({
-							collection: 'perfect-scrabble-games',
-							data: completedGame
-						})
-					});
+					);
 
 					if (!response.ok) {
-						throw new Error(`Failed to save: ${response.statusText}`);
+						throw new Error(
+							`Failed to save: ${response.statusText}`,
+						);
 					}
 
 					const result = await response.json();
