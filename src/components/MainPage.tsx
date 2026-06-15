@@ -12,6 +12,7 @@ import { updateTileBag } from '../lib/wolfram/updateTileBag';
 import { scoreTurn } from '../lib/wolfram/scoreTurn';
 import { getTilesString } from '../lib/utils';
 import type { Turn } from '../lib/utils';
+// import TestWriteOnLoad from './TestWriteOnLoad';
 
 const SEVENS = sevenletterbingos
 	.trim()
@@ -73,6 +74,7 @@ export default function MainPage() {
 
 	return (
 		<>
+			{/* <TestWriteOnLoad /> */}
 			{showWelcome && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 					<div className="bg-white p-4 md:p-6 rounded-lg max-w-sm md:max-w-2xl shadow-xl mx-4">
@@ -362,7 +364,6 @@ export default function MainPage() {
 										</>
 									}
 								</div>
-
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">
