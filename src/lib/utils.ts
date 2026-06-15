@@ -48,9 +48,8 @@ export interface FirestoreTurn {
 }
 
 export interface ScrabbleGameData {
-	gameId?: string; // Firestore will generate this if using addDoc, or you can provide with setDoc
+	gameId?: string;
 	turns: FirestoreTurn[];
-	timestamp: Date;
 }
 
 export const placeWord = (
@@ -60,11 +59,26 @@ export const placeWord = (
 	const newBoard = board.map((row) => [...row]);
 	const { bingo, row, col, direction, blanks } = placement;
 
-	// Determine which index to style as blank
+	// Basic validation
+	if (!bingo || typeof bingo !== 'string') {
+		console.warn('placeWord: invalid bingo in placement', placement);
+		return newBoard;
+	}
+	if (typeof row !== 'number' || typeof col !== 'number') {
+		console.warn('placeWord: invalid row/col in placement', placement);
+		return newBoard;
+	}
+
+	// Determine which index to style as blank (defensive checks)
 	let blankIndex: number | null = null;
-	if (blanks && blanks.indices.length > 0) {
-		blankIndex =
-			blanks.indices[Math.floor(Math.random() * blanks.indices.length)];
+	if (blanks && Array.isArray(blanks.indices) && blanks.indices.length > 0) {
+		const validIndices = blanks.indices.filter(
+			(n) => typeof n === 'number' && !Number.isNaN(n),
+		);
+		if (validIndices.length > 0) {
+			blankIndex =
+				validIndices[Math.floor(Math.random() * validIndices.length)];
+		}
 	}
 
 	let r = row;
@@ -72,6 +86,16 @@ export const placeWord = (
 	for (let i = 0; i < bingo.length; i++) {
 		const letter = bingo[i];
 		const isBlank = blankIndex === i + 1;
+		// Bounds check
+		if (r < 0 || r >= newBoard.length || c < 0 || c >= newBoard[0].length) {
+			console.warn('placeWord: placement out of bounds, skipping remainder', {
+				placement,
+				index: i,
+				r,
+				c,
+			});
+			break;
+		}
 		if (newBoard[r][c] === '' || isBlank) {
 			newBoard[r][c] = isBlank ? '?' : letter;
 		}
