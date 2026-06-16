@@ -12,12 +12,12 @@ export default function Register() {
 	const [error, setError] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	// If already logged in, go to main
+	// If already logged in, go to main (but not after fresh registration)
 	useEffect(() => {
-		if (!loading && currentUser) {
+		if (!loading && currentUser && !isSubmitting) {
 			navigate('/main', { replace: true });
 		}
-	}, [currentUser, loading, navigate]);
+	}, [currentUser, loading, navigate, isSubmitting]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -39,14 +39,14 @@ export default function Register() {
 
 		try {
 			await signup(email, password);
-			// navigation happens automatically via the useEffect above
+			// Redirect to login page after successful registration
+			navigate('/login', { replace: true });
 		} catch (err: unknown) {
 			const errorMessage =
 				err instanceof Error ?
 					err.message
 				:	'Registration failed. Please try again.';
 			setError(errorMessage);
-		} finally {
 			setIsSubmitting(false);
 		}
 	};
