@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import sevenletterbingos from '../assets/SevenLetterBingos.txt?raw';
 import eightletterbingos from '../assets/EightLetterBingos.txt?raw';
 import Board from './Board';
@@ -12,6 +12,8 @@ import { updateTileBag } from '../lib/wolfram/updateTileBag';
 import { scoreTurn } from '../lib/wolfram/scoreTurn';
 import { getTilesString } from '../lib/utils';
 import type { Turn } from '../lib/utils';
+import { useAuth } from '../hooks/useAuth';
+// import TestWriteOnLoad from './TestWriteOnLoad';
 
 const SEVENS = sevenletterbingos
 	.trim()
@@ -26,6 +28,9 @@ const EIGHTS = eightletterbingos
 	.filter((w) => w.length === 8);
 
 export default function MainPage() {
+	const { logout } = useAuth();
+	const navigate = useNavigate();
+
 	const [board, setBoard] = useState<string[][]>(
 		Array(BOARD_SIZE)
 			.fill(null)
@@ -73,6 +78,7 @@ export default function MainPage() {
 
 	return (
 		<>
+			{/* <TestWriteOnLoad /> */}
 			{showWelcome && (
 				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 					<div className="bg-white p-4 md:p-6 rounded-lg max-w-sm md:max-w-2xl shadow-xl mx-4">
@@ -139,6 +145,15 @@ export default function MainPage() {
 						>
 							View Collection
 						</Link>
+						<button
+							onClick={async () => {
+								await logout();
+								navigate('/', { replace: true });
+							}}
+							className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded shadow-lg"
+						>
+							Log Out
+						</button>
 						<div className="relative">
 							<button
 								onMouseEnter={() =>
@@ -362,7 +377,6 @@ export default function MainPage() {
 										</>
 									}
 								</div>
-
 							</div>
 						</div>
 						<div className="flex flex-col gap-4">

@@ -1,10 +1,9 @@
-// Import the functions you need from the SDKs you need
+// firebaseConfig.ts
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
-import { getAuth, signInAnonymously } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
 	apiKey: 'AIzaSyAE33P92IEoZU38JzRzp5krK3bzazq8R-g',
 	authDomain: 'perfect-scrabble-games.firebaseapp.com',
@@ -20,10 +19,5 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
-
-// Enable anonymous authentication
-signInAnonymously(auth).catch((error) => {
-	console.error('Failed to authenticate anonymously:', error);
-});
 
 export { db, analytics, auth };

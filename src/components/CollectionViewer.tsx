@@ -18,6 +18,11 @@ import type { ScrabbleGameData } from '../lib/utils';
 
 interface GameWithId extends ScrabbleGameData {
 	id: string;
+	timestamp: Date;
+	leftover: {
+		tiles: string[];
+		points: number;
+	};
 }
 
 const CollectionViewer: React.FC = () => {
@@ -57,17 +62,30 @@ const CollectionViewer: React.FC = () => {
 							id: doc.id,
 							turns: data.turns,
 							timestamp: data.timestamp.toDate(),
+							leftover: data.leftover,
 						};
 					},
 				);
 				// Sort by total score descending
 				gamesData.sort((a, b) => {
-					const scoreA = a.turns.reduce((sum, t) => sum + t.score, 0);
-					const scoreB = b.turns.reduce((sum, t) => sum + t.score, 0);
+					const scoreA = calculatePlayerScores(
+						a.turns,
+						a.leftover,
+					).total;
+					const scoreB = calculatePlayerScores(
+						b.turns,
+						b.leftover,
+					).total;
 					return scoreB - scoreA;
 				});
 				setGames(gamesData);
 				setHasMore(false); // No pagination for total score sort
+				console.log(
+					'CollectionViewer: loaded',
+					gamesData.length,
+					'games (sorted by totalScore)',
+					gamesData,
+				);
 			} else {
 				// For timestamp sorting, use pagination
 				let q = query(
@@ -93,14 +111,27 @@ const CollectionViewer: React.FC = () => {
 							id: doc.id,
 							turns: data.turns,
 							timestamp: data.timestamp.toDate(),
+							leftover: data.leftover,
 						};
 					},
 				);
 
 				if (loadMore) {
 					setGames((prev) => [...prev, ...gamesData]);
+					console.log(
+						'CollectionViewer: appended',
+						gamesData.length,
+						'games; appended ids=',
+						gamesData,
+					);
 				} else {
 					setGames(gamesData);
+					console.log(
+						'CollectionViewer: loaded',
+						gamesData.length,
+						'games (sorted by timestamp)',
+						gamesData,
+					);
 				}
 
 				if (querySnapshot.docs.length < PAGE_SIZE) {
@@ -142,6 +173,7 @@ const CollectionViewer: React.FC = () => {
 				id: doc.id,
 				turns: doc.data().turns,
 				timestamp: doc.data().timestamp.toDate(),
+				leftover: doc.data().leftover,
 			}));
 
 			// Create JSON blob
@@ -165,13 +197,18 @@ const CollectionViewer: React.FC = () => {
 		}
 	};
 
-	const calculatePlayerScores = (turns: ScrabbleGameData['turns']) => {
+	const calculatePlayerScores = (
+		turns: ScrabbleGameData['turns'],
+		leftover?: { points: number },
+	) => {
 		const playerA = turns
 			.filter((t) => t.id % 2 === 1)
 			.reduce((sum, t) => sum + t.score, 0);
-		const playerB = turns
+		const playerBTurnScore = turns
 			.filter((t) => t.id % 2 === 0)
 			.reduce((sum, t) => sum + t.score, 0);
+		const leftoverBonus = leftover?.points ? leftover.points * 2 : 0;
+		const playerB = playerBTurnScore + leftoverBonus;
 		const total = playerA + playerB;
 		return { playerA, playerB, total };
 	};
@@ -253,7 +290,10 @@ const CollectionViewer: React.FC = () => {
 					<p>No games found.</p>
 				:	<div className="space-y-4">
 						{games.map((game) => {
-							const scores = calculatePlayerScores(game.turns);
+							const scores = calculatePlayerScores(
+								game.turns,
+								game.leftover,
+							);
 							const finalBoard = game.turns.reduce(
 								(board, turn) =>
 									placeWord(board, {
@@ -280,7 +320,7 @@ const CollectionViewer: React.FC = () => {
 											{game.timestamp.toLocaleString()}
 										</p>
 									</div>
-									<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+									<div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 										<div>
 											<h3 className="font-bold text-green-900">
 												Player A Score
@@ -298,6 +338,14 @@ const CollectionViewer: React.FC = () => {
 												Total Score
 											</h3>
 											<p>{scores.total}</p>
+										</div>
+										<div>
+											<h3 className="font-bold text-green-900">
+												Leftover Tiles
+											</h3>
+											<p>
+												{game.leftover.tiles.join(', ')}
+											</p>
 										</div>
 									</div>
 									<details className="mt-4">
@@ -384,7 +432,7 @@ const CollectionViewer: React.FC = () => {
 															</td>
 															<td className="border border-gray-300 px-4 py-2">
 																{turn.blanks ?
-																	`${turn.blanks.tile} (${turn.blanks.indices.join(', ')})`
+																	`${turn.blanks.tile} (${Array.isArray(turn.blanks.indices) ? turn.blanks.indices.join(', ') : ''})`
 																:	'-'}
 															</td>
 														</tr>
