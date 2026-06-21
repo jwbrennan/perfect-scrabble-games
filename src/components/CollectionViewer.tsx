@@ -23,6 +23,7 @@ interface GameWithId extends ScrabbleGameData {
 		tiles: string[];
 		points: number;
 	};
+	foundBy?: string;
 }
 
 const CollectionViewer: React.FC = () => {
@@ -63,6 +64,7 @@ const CollectionViewer: React.FC = () => {
 							turns: data.turns,
 							timestamp: data.timestamp.toDate(),
 							leftover: data.leftover,
+							foundBy: data.foundBy,
 						};
 					},
 				);
@@ -80,12 +82,6 @@ const CollectionViewer: React.FC = () => {
 				});
 				setGames(gamesData);
 				setHasMore(false); // No pagination for total score sort
-				console.log(
-					'CollectionViewer: loaded',
-					gamesData.length,
-					'games (sorted by totalScore)',
-					gamesData,
-				);
 			} else {
 				// For timestamp sorting, use pagination
 				let q = query(
@@ -112,26 +108,15 @@ const CollectionViewer: React.FC = () => {
 							turns: data.turns,
 							timestamp: data.timestamp.toDate(),
 							leftover: data.leftover,
+							foundBy: data.foundBy,
 						};
 					},
 				);
 
 				if (loadMore) {
 					setGames((prev) => [...prev, ...gamesData]);
-					console.log(
-						'CollectionViewer: appended',
-						gamesData.length,
-						'games; appended ids=',
-						gamesData,
-					);
 				} else {
 					setGames(gamesData);
-					console.log(
-						'CollectionViewer: loaded',
-						gamesData.length,
-						'games (sorted by timestamp)',
-						gamesData,
-					);
 				}
 
 				if (querySnapshot.docs.length < PAGE_SIZE) {
@@ -174,6 +159,7 @@ const CollectionViewer: React.FC = () => {
 				turns: doc.data().turns,
 				timestamp: doc.data().timestamp.toDate(),
 				leftover: doc.data().leftover,
+				foundBy: doc.data().foundBy,
 			}));
 
 			// Create JSON blob
@@ -348,6 +334,14 @@ const CollectionViewer: React.FC = () => {
 											</p>
 										</div>
 									</div>
+									{game.foundBy && (
+										<div className="mt-3">
+											<h3 className="font-bold text-green-900">
+												Found By
+											</h3>
+											<p>{game.foundBy}</p>
+										</div>
+									)}
 									<details className="mt-4">
 										<summary className="cursor-pointer text-blue-600">
 											View Board

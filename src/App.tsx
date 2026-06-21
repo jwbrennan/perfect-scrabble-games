@@ -10,6 +10,7 @@ import MainPage from './components/MainPage';
 import CollectionViewer from './components/CollectionViewer';
 import Login from './components/Login';
 import Register from './components/Register';
+import NotFound from './components/NotFound';
 
 // Simple protected route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -57,6 +58,7 @@ function App() {
 							</ProtectedRoute>
 						}
 					/>
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</Router>
 		</AuthProvider>

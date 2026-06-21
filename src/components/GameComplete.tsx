@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import type { Turn, FirestoreTurn, ScrabbleGameData } from '../lib/utils';
+import { useAuth } from '../hooks/useAuth';
 
 interface GameCompleteProps {
 	turns: Turn[];
 }
 
 const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
+	const { currentUser } = useAuth();
 	const [saveStatus, setSaveStatus] = useState<
 		'idle' | 'saving' | 'saved' | 'error'
 	>('idle');
@@ -30,13 +32,20 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 						turns: turnsForFirestore,
 					};
 
+					const params = new URLSearchParams({
+						gameData: JSON.stringify(completedGame),
+					});
+
+					// Add username if user is logged in
+					if (currentUser?.displayName) {
+						params.append('foundBy', currentUser.displayName);
+					}
+
 					const response = await fetch(
 						'https://www.wolframcloud.com/obj/josephb/Scrabble/LiveAPIs/WriteToFirestore',
 						{
 							method: 'POST',
-							body: new URLSearchParams({
-								data: JSON.stringify(completedGame),
-							}),
+							body: params,
 						},
 					);
 
@@ -66,7 +75,7 @@ const GameComplete: React.FC<GameCompleteProps> = ({ turns }) => {
 
 			saveGameToFirestore();
 		}
-	}, [turns, saveStatus]); // Dependencies: re-run if turns array changes or saveStatus changes
+	}, [turns, saveStatus, currentUser]); // Dependencies: re-run if turns array changes or saveStatus changes
 
 	return (
 		<div>
