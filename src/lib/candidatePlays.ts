@@ -114,7 +114,7 @@ export async function findNextViablePlay(
 		}
 		index++;
 	}
-	console.log('Exhausted all words, no viable plays found');
+	// console.log('Exhausted all words, no viable plays found');
 	return null; // No viable plays found
 }
 
